@@ -1,15 +1,17 @@
 import React from 'react';
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {administratorsState, membersState, roomNameState} from "../State/RoomsState";
 import {Box, Grid, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import membersCountState from "../selectors/MembersCountState";
 
 const RoomHeaderComponent = () =>
 {
     const [roomName] = useRecoilState(roomNameState);
     const [administrators] = useRecoilState(administratorsState);
     const [members] = useRecoilState(membersState);
+    //TODO const [membersCount] = useRecoilValue(membersCountState);
 
     const handleAddAdminClick = () =>
     {
