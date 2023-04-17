@@ -17,7 +17,7 @@ export const selectedRoomIndexState = atom({
 
 export const conversationState = atom({
     key: 'conversationState',
-    default: [],
+    default: [{contentType: 'activity', content: "Hello world!", id: 1, }],
 });
 
 export const administratorsState = atom({
@@ -37,7 +37,7 @@ export const activitiesState = atom({
 
 export const roomNameState = atom({
     key: 'roomNameState',
-    default: '',
+    default: "Leon's room",
 });
 
 export const favouriteRoomsState = atom({
