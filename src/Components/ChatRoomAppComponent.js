@@ -5,9 +5,9 @@ import ConversationComponent from "./ConversationComponent";
 import ChatEntryComponent from "./ChatEntryComponent";
 import {Grid, Box, Stack} from '@mui/material'
 
-function ChatRoomAppComponent(props)
+const ChatRoomAppComponent = () =>
 {
-    const [chatEntryHeight, setChatEntryHeight] = useState('50px');
+    const [chatEntryHeight, setChatEntryHeight] = useState(50);
 
     const changeHeight = (value) =>
     {
@@ -26,10 +26,10 @@ function ChatRoomAppComponent(props)
                     </Grid>
                     <Grid item xl>
                         <Stack>
-                            <Box sx={{height: this.state.heightValue === 100 ? '900px' : '950px'}}>
+                            <Box sx={{height: chatEntryHeight === 100 ? '900px' : '950px'}}>
                                 <ConversationComponent/>
                             </Box>
-                            <Box sx={{height: this.state.heightValue === 100 ? '100px' : '50px'}}>
+                            <Box sx={{height: chatEntryHeight === 100 ? '100px' : '50px'}}>
                                 <ChatEntryComponent changeHeight={changeHeight}/>
                             </Box>
                         </Stack>
