@@ -7,11 +7,11 @@ import {selectedRoomIndexState} from "../State/RoomsState";
 
 const RoomComponent = (props) =>
 {
-    const selectedRoomIndex = useRecoilState(selectedRoomIndexState);
+    const [selectedRoomIndex, setSelectedRoomIndex] = useRecoilState(selectedRoomIndexState);
 
     const handleFetchConversation = () =>
     {
-        // TODO
+        setSelectedRoomIndex(props.index);
     }
 
     const handleCloseRoom = () =>
