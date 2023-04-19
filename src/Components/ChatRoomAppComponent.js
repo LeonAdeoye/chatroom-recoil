@@ -11,6 +11,7 @@ const ChatRoomAppComponent = () =>
 {
     const [chatEntryHeight, setChatEntryHeight] = useState(50);
     const changeHeight = (value) => setChatEntryHeight(value);
+    // eslint-disable-next-line no-unused-vars
     const [users, setUsers] = useRecoilState(usersState);
 
     useEffect(() => {
@@ -20,7 +21,7 @@ const ChatRoomAppComponent = () =>
             })
             .catch(err => console.log(err.message));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [users]);
+    }, []);
 
     return (
         <>

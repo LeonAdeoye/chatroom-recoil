@@ -1,26 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Box, Typography} from "@mui/material";
 import RoomHeaderComponent from "./RoomHeaderComponent";
 import ActivityComponent from "./ActivityComponent";
 import ChatMessageComponent from "./ChatMessageComponent";
 import {useRecoilState} from "recoil";
-import {selectedRoomIndexState, selectedRoomState} from "../State/RoomsState";
-import axios from "axios";
+import {selectedRoomState} from "../State/RoomsState";
+
 
 const ConversationComponent = () =>
 {
-    const [room, setRoom] = useRecoilState(selectedRoomState);
-    const [selectedRoomIndex] = useRecoilState(selectedRoomIndexState);
-
-    useEffect(() =>
-    {
-        axios.get('http://localhost:8080/room?roomId=' + selectedRoomIndex)
-            .then(response => {
-                setRoom(response.data);
-            })
-            .catch(err => console.log(err.message));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[selectedRoomIndex]);
+    const [room] = useRecoilState(selectedRoomState);
 
     return (
         <div>

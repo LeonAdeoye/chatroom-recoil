@@ -1,17 +1,15 @@
 import React from 'react';
 import {Grid, InputBase, Stack, Typography} from "@mui/material";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {selectedChatMessageIndexState} from "../State/RoomsState";
+import {useRecoilValue} from "recoil";
 import fullNameSelector from "../selectors/FullNameSelector"
 import shorterTimeStampSelector from "../selectors/ShorterTimeStampSelector";
 
 const ChatMessageComponent = (props) =>
 {
-    const [setSelectedChatMessageIndex] = useRecoilState(selectedChatMessageIndexState); // TODO
     const {chatMessage} = props;
     const fullName = useRecoilValue(fullNameSelector(chatMessage.authorId));
     const shorterTimeStamp = useRecoilValue(shorterTimeStampSelector(chatMessage.timeStamp));
-    const handleSelectChatMessage = () => setSelectedChatMessageIndex(chatMessage.id);
+    const handleSelectChatMessage = () => {};
 
     return (
         <div>

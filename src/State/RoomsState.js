@@ -17,7 +17,7 @@ export const selectedRoomIndexState = atom({
 
 export const conversationState = atom({
     key: 'conversationState',
-    default: [{contentType: 'activity', content: "Hello world!", id: 1, }],
+    default: [],
 });
 
 export const administratorsState = atom({

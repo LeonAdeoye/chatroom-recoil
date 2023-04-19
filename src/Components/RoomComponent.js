@@ -3,15 +3,33 @@ import {Box, Grid, IconButton, Tooltip, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {useRecoilState} from "recoil";
-import {selectedRoomIndexState} from "../State/RoomsState";
+import {administratorsState, membersState, selectedRoomIndexState, selectedRoomState} from "../State/RoomsState";
+import axios from "axios";
 
 const RoomComponent = (props) =>
 {
     const [selectedRoomIndex, setSelectedRoomIndex] = useRecoilState(selectedRoomIndexState);
+    // eslint-disable-next-line no-unused-vars
+    const [room, setRoom] = useRecoilState(selectedRoomState);
+    // eslint-disable-next-line no-unused-vars
+    const [members, setMembers] = useRecoilState(membersState);
+    // eslint-disable-next-line no-unused-vars
+    const [admins, setAdmins] = useRecoilState(administratorsState);
 
     const handleFetchConversation = () =>
     {
         setSelectedRoomIndex(props.index);
+        if(props.index !== -1)
+        {
+            axios.get('http://localhost:8080/room?roomId=' + props.index)
+                .then(response => {
+                    let room = response.data
+                    setRoom(room);
+                    setMembers(room.members);
+                    setAdmins(room.administrators);
+                })
+                .catch(err => console.log(err.message));
+        }
     }
 
     const handleCloseRoom = () =>

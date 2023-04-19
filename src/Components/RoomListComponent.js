@@ -28,7 +28,6 @@ const RoomListComponent = () =>
             .then(response =>
             {
                 setRooms(response.data);
-                console.log("Rooms: ", rooms);
             })
             .catch(err =>
             {

@@ -7,7 +7,7 @@ const membersCountSelector = selector({
     get: ({get}) =>
     {
         const members = get(membersState);
-        return "Members: " + members.length;
+        return `Members: ${members.length}`;
     }
 });
 

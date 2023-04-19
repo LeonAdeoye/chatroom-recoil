@@ -1,16 +1,17 @@
 import React from 'react';
 import {useRecoilState, useRecoilValue} from "recoil";
-import {administratorsState, roomNameState} from "../State/RoomsState";
+import {roomNameState} from "../State/RoomsState";
 import {Box, Grid, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import membersCountSelector from "../selectors/MembersCountSelector";
+import adminsCountSelector from "../selectors/AdminsCountSelector";
 
 const RoomHeaderComponent = () =>
 {
     const [roomName] = useRecoilState(roomNameState);
-    const [administrators] = useRecoilState(administratorsState);
-    const [members] = useRecoilValue(membersCountSelector);
+    const membersCount = useRecoilValue(membersCountSelector);
+    const adminsCount = useRecoilValue(adminsCountSelector);
 
     const handleAddAdminClick = () =>
     {
@@ -50,12 +51,12 @@ const RoomHeaderComponent = () =>
                     </Grid>
                     <Grid item xs={0.75}>
                         <Box>
-                            <Typography sx={{color:'lightgreen'}}  variant="subtitle2">{members}</Typography>
+                            <Typography sx={{color:'lightgreen'}}  variant="subtitle2">{membersCount}</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={0.75}>
                         <Box>
-                            <Typography sx={{color:'red'}}  variant="subtitle2">Admins: {administrators.length}</Typography>
+                            <Typography sx={{color:'red'}}  variant="subtitle2">{adminsCount}</Typography>
                         </Box>
                     </Grid>
                 </Grid>
