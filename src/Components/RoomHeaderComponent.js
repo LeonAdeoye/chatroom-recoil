@@ -1,6 +1,6 @@
 import React from 'react';
 import {useRecoilState, useRecoilValue} from "recoil";
-import {roomNameState} from "../State/RoomsState";
+import {selectedRoomState} from "../State/RoomsState";
 import {Box, Grid, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
@@ -9,7 +9,7 @@ import adminsCountSelector from "../selectors/AdminsCountSelector";
 
 const RoomHeaderComponent = () =>
 {
-    const [roomName] = useRecoilState(roomNameState);
+    const [room] = useRecoilState(selectedRoomState);
     const membersCount = useRecoilValue(membersCountSelector);
     const adminsCount = useRecoilValue(adminsCountSelector);
 
@@ -26,7 +26,7 @@ const RoomHeaderComponent = () =>
     return (
         <div>
             <Stack width={'100%'} sx={{ border:1, borderColor:'white', backgroundColor:'#363535'}}>
-                <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{roomName}</Typography></Box>
+                <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{room.roomName}</Typography></Box>
                 <Grid container>
                     <Grid item xs={0.5}>
                         <Box>

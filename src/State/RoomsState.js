@@ -15,36 +15,6 @@ export const selectedRoomIndexState = atom({
     default: -1,
 });
 
-export const conversationState = atom({
-    key: 'conversationState',
-    default: [],
-});
-
-export const administratorsState = atom({
-    key: 'administratorsState',
-    default: [],
-});
-
-export const membersState = atom({
-    key: 'membersState',
-    default: [],
-});
-
-export const activitiesState = atom({
-    key: 'activitiesState',
-    default: [],
-});
-
-export const roomNameState = atom({
-    key: 'roomNameState',
-    default: "Leon's room",
-});
-
-export const favouriteRoomsState = atom({
-    key: 'favouriteRoomsState',
-    default: [],
-});
-
 export const selectedChatMessageIndexState = atom({
     key: 'selectedChatMessageIndexState',
     default: -1,

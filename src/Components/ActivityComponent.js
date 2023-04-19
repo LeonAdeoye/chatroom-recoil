@@ -9,7 +9,7 @@ const ActivityComponent = (props) =>
     return (
         <div>
             <Box sx={{backgroundColor:'#404040', height: '30px', color: 'orange'}}>
-                { activityText }
+                {activityText}
             </Box>
         </div>
     );

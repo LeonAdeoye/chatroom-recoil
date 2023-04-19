@@ -4,9 +4,9 @@ import {Accordion, AccordionDetails, AccordionSummary, IconButton, Stack, TextFi
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import FavouritesFolderComponent from "./FavouritesFolderComponent";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {favouriteRoomsState, roomsState} from "../State/RoomsState";
+import {roomsState} from "../State/RoomsState";
 import {useRecoilState} from "recoil";
-import {loggedInUserIdState, usersState} from "../State/UsersState";
+import {favouriteRoomsState, loggedInUserIdState, usersState} from "../State/UsersState";
 import NonFavouritesFolderComponent from "./NonFavouritesFolderComponent";
 import axios from "axios";
 

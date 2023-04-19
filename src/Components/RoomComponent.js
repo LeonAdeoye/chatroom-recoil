@@ -11,10 +11,6 @@ const RoomComponent = (props) =>
     const [selectedRoomIndex, setSelectedRoomIndex] = useRecoilState(selectedRoomIndexState);
     // eslint-disable-next-line no-unused-vars
     const [room, setRoom] = useRecoilState(selectedRoomState);
-    // eslint-disable-next-line no-unused-vars
-    const [members, setMembers] = useRecoilState(membersState);
-    // eslint-disable-next-line no-unused-vars
-    const [admins, setAdmins] = useRecoilState(administratorsState);
 
     const handleFetchConversation = () =>
     {
@@ -25,8 +21,6 @@ const RoomComponent = (props) =>
                 .then(response => {
                     let room = response.data
                     setRoom(room);
-                    setMembers(room.members);
-                    setAdmins(room.administrators);
                 })
                 .catch(err => console.log(err.message));
         }

@@ -1,13 +1,13 @@
 import {selector} from "recoil";
-import {administratorsState} from "../State/RoomsState";
+import {selectedRoomState} from "../State/RoomsState";
 
 
 const adminsCountSelector = selector({
     key: "adminsCountSelector",
     get: ({get}) =>
     {
-        const admins = get(administratorsState);
-        return `Admins: ${admins.length}`;
+        const room = get(selectedRoomState);
+        return `Admins: ${room.administrators.length}`;
     }
 });
 
