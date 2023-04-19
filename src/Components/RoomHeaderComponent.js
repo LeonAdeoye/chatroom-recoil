@@ -4,13 +4,13 @@ import {administratorsState, roomNameState} from "../State/RoomsState";
 import {Box, Grid, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-import membersCountState from "../selectors/MembersCountState";
+import membersCountSelector from "../selectors/MembersCountSelector";
 
 const RoomHeaderComponent = () =>
 {
     const [roomName] = useRecoilState(roomNameState);
     const [administrators] = useRecoilState(administratorsState);
-    const membersCount = useRecoilValue(membersCountState);
+    const [members] = useRecoilValue(membersCountSelector);
 
     const handleAddAdminClick = () =>
     {
@@ -50,7 +50,7 @@ const RoomHeaderComponent = () =>
                     </Grid>
                     <Grid item xs={0.75}>
                         <Box>
-                            <Typography sx={{color:'lightgreen'}}  variant="subtitle2">Members: {membersCount}</Typography>
+                            <Typography sx={{color:'lightgreen'}}  variant="subtitle2">{members}</Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={0.75}>

@@ -44,3 +44,8 @@ export const favouriteRoomsState = atom({
     key: 'favouriteRoomsState',
     default: [],
 });
+
+export const selectedChatMessageIndexState = atom({
+    key: 'selectedChatMessageIndexState',
+    default: -1,
+});

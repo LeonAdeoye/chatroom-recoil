@@ -1,9 +1,13 @@
 import ChatRoomAppComponent from "./Components/ChatRoomAppComponent";
+import {RecoilRoot} from "recoil";
 
-function App() {
+function App()
+{
   return (
       <div className="App">
-        <ChatRoomAppComponent/>
+        <RecoilRoot>
+            <ChatRoomAppComponent/>
+        </RecoilRoot>
       </div>
   );
 }
