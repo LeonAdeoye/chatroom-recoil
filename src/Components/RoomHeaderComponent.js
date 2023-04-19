@@ -15,12 +15,12 @@ const RoomHeaderComponent = () =>
 
     const handleAddAdminClick = () =>
     {
-        // TODO
+        // TODO display dialog box.
     }
 
     const handleAddMemberClick = () =>
     {
-        // TODO
+        // TODO display dialog box.
     }
 
     return (

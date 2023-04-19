@@ -65,8 +65,11 @@ const RoomListComponent = () =>
 
     const filterRooms = (func) =>
     {
-        if (favouriteRooms.length > 0 && rooms.length > 0)
-            return rooms.filter(room => func(favouriteRooms, room.id)).filter(room => filterText === '' || room.name.toUpperCase().includes(filterText.toUpperCase()));
+        /*if (favouriteRooms.length > 0 && rooms.length > 0)
+            return rooms.filter(room => func(favouriteRooms, room.id)).filter(room => filterText === '' || room.name.toUpperCase().includes(filterText.toUpperCase()));*/
+
+        if (rooms.length > 0)
+            return rooms.filter(room => filterText === '' || room.name.toUpperCase().includes(filterText.toUpperCase()));
 
         // TODO
         /*if (users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
