@@ -3,7 +3,7 @@ import {Box, Grid, IconButton, Tooltip, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {useRecoilState} from "recoil";
-import {administratorsState, membersState, selectedRoomIndexState, selectedRoomState} from "../State/RoomsState";
+import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
 
 const RoomComponent = (props) =>

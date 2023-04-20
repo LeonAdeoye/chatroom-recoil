@@ -1,11 +1,11 @@
 import React from 'react';
 import {useRecoilState, useRecoilValue} from "recoil";
-import {selectedRoomState} from "../State/RoomsState";
+import {selectedRoomState} from "../Atoms/RoomsState";
 import {Box, Grid, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-import membersCountSelector from "../selectors/MembersCountSelector";
-import adminsCountSelector from "../selectors/AdminsCountSelector";
+import membersCountSelector from "../Selectors/MembersCountSelector";
+import adminsCountSelector from "../Selectors/AdminsCountSelector";
 
 const RoomHeaderComponent = () =>
 {

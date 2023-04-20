@@ -1,5 +1,5 @@
 import {selector} from "recoil";
-import {selectedRoomState} from "../State/RoomsState";
+import {selectedRoomState} from "../Atoms/RoomsState";
 
 
 const adminsCountSelector = selector({

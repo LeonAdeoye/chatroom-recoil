@@ -1,15 +1,14 @@
 import ChatRoomAppComponent from "./Components/ChatRoomAppComponent";
-import {RecoilRoot} from "recoil";
+import LoginDialogComponent from "./Components/LoginDialogComponent";
 
 function App()
 {
-  return (
-      <div className="App">
-        <RecoilRoot>
+    return (
+        <div className="App">
+            <LoginDialogComponent/>
             <ChatRoomAppComponent/>
-        </RecoilRoot>
-      </div>
-  );
+        </div>
+    );
 }
 
 export default App;

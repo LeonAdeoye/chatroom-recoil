@@ -1,31 +1,54 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import {useRecoilState} from "recoil";
-import {usersState} from "../State/UsersState";
-import {loginDialogDisplayState} from "../State/DialogsState";
+import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {loginDialogDisplayState} from "../Atoms/DialogsState";
+import axios from "axios";
 
 const LoginDialogComponent = () =>
 {
-    const [fullName] = useState('');
-    const [users] = useRecoilState(usersState);
-    const [loginDialogDisplayFlag, setLoginDialogDisplayFlag] = useRecoilState(loginDialogDisplayState)
+    const [fullName, setFullName] = useState('');
+    const [users,setUsers] = useRecoilState(usersState);
+    const [loginDialogDisplayFlag, setLoginDialogDisplayFlag] = useRecoilState(loginDialogDisplayState);
+    // eslint-disable-next-line no-unused-vars
+    const [loggedInUserId, setLoggedInUserId] = useRecoilState(loggedInUserIdState);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/users')
+            .then(response => {
+                setUsers(response.data);
+            })
+            .catch(err => console.log(err.message));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleOnChangeEvent = (event) =>
     {
-        this.setState({fullName: event.target.value});
+        setFullName(event.target.value);
+    }
+
+    const addUser = (fullName) =>
+    {
+        axios.post('http://localhost:8080/addUser?fullName='+fullName)
+            .then(response =>
+            {
+                setUsers(response.data);
+            })
+            .catch(err =>
+            {
+                // TODO handle all error logging also with popups.
+                console.log(err.message);
+            });
     }
 
     const handleSubmit = () =>
     {
-        let loginFullName = fullName;
-        let result = users.find(user => user.fullName === loginFullName);
+        let existingUser = users.find(user => user.fullName.toUpperCase() === fullName.toUpperCase());
 
-        if(result !== undefined)
-            //loginUser(result.id);
-            console.log("found user", result)
+        if(existingUser)
+            setLoggedInUserId(existingUser.id);
         else
-            //addUser(loginFullName);
-            console.log("not found user", result)
+            addUser(fullName);
 
         setLoginDialogDisplayFlag(false);
     }

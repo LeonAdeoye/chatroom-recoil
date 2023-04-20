@@ -10,7 +10,7 @@ export const loggedInUserIdState = atom({
     default: '',
 });
 
-export const favouriteRoomsState = atom({
+/*export const favouriteRoomsState = atom({
     key: 'favouriteRoomsState',
     default: [],
-});
+});*/

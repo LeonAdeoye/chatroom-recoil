@@ -1,7 +1,7 @@
 import React from 'react';
 import {useRecoilValue} from "recoil";
 import {Box} from "@mui/material";
-import activitySelector from "../selectors/ActivitySelector";
+import activitySelector from "../Selectors/ActivitySelector";
 
 const ActivityComponent = (props) =>
 {

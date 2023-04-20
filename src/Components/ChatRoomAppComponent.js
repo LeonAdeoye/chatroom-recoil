@@ -1,27 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {useRecoilState} from "recoil";
+import React, {useState} from 'react';
 import RoomListComponent from "./RoomListComponent";
 import ConversationComponent from "./ConversationComponent";
 import ChatEntryComponent from "./ChatEntryComponent";
 import {Grid, Box, Stack} from '@mui/material'
-import {usersState} from "../State/UsersState";
-import axios from "axios";
 
 const ChatRoomAppComponent = () =>
 {
     const [chatEntryHeight, setChatEntryHeight] = useState(50);
     const changeHeight = (value) => setChatEntryHeight(value);
-    // eslint-disable-next-line no-unused-vars
-    const [users, setUsers] = useRecoilState(usersState);
-
-    useEffect(() => {
-        axios.get('http://localhost:8080/users')
-            .then(response => {
-                setUsers(response.data);
-            })
-            .catch(err => console.log(err.message));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <>

@@ -4,19 +4,18 @@ import {Accordion, AccordionDetails, AccordionSummary, IconButton, Stack, TextFi
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import FavouritesFolderComponent from "./FavouritesFolderComponent";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {roomsState} from "../State/RoomsState";
+import {roomsState} from "../Atoms/RoomsState";
 import {useRecoilState} from "recoil";
-import {favouriteRoomsState, loggedInUserIdState, usersState} from "../State/UsersState";
+import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import NonFavouritesFolderComponent from "./NonFavouritesFolderComponent";
 import axios from "axios";
 
 
 const RoomListComponent = () =>
 {
-    const favouriteRooms = useRecoilState(favouriteRoomsState);
     const [rooms, setRooms] = useRecoilState(roomsState);
-    const loggedInUserId = useRecoilState(loggedInUserIdState);
-    const users = useRecoilState(usersState);
+    const [loggedInUserId] = useRecoilState(loggedInUserIdState);
+    const [users] = useRecoilState(usersState);
 
     const [nonFavouriteExpansionToggle, setNonFavouriteExpansionToggle] = useState(false);
     const [favouriteExpansionToggle, setFavouriteExpansionToggle] = useState(false);
@@ -41,46 +40,36 @@ const RoomListComponent = () =>
         // TODO - toggle open new chat room dialog.
     }
 
-    const handleOnChange = (event) =>
-    {
-        setFilterText(event.target.value);
-        // TODO
-    }
+    const handleOnChange = (event) => setFilterText(event.target.value);
 
-    const handleAccordionFavouritesClick = (event) =>
+    const handleAccordionFavouritesClick = () =>
     {
         let value = !favouriteExpansionToggle;
         setFavouriteExpansionToggle(value)
     }
 
-    const handleAccordionRecentClick = (event) =>
+    const handleAccordionRecentClick = () =>
     {
         let value = !nonFavouriteExpansionToggle;
         setNonFavouriteExpansionToggle(value);
     }
 
-    // TODO
-    //const myFavouriteRooms = filterRooms((room, id) => { return room.includes(id); });
-    //const myNonFavouriteRooms = filterRooms((room, id) => { return !room.includes(id); });
-
     const filterRooms = (func) =>
     {
-        /*if (favouriteRooms.length > 0 && rooms.length > 0)
-            return rooms.filter(room => func(favouriteRooms, room.id)).filter(room => filterText === '' || room.name.toUpperCase().includes(filterText.toUpperCase()));*/
+        const filterToApply = filterText.toUpperCase();
 
-        if (rooms.length > 0)
-            return rooms.filter(room => filterText === '' || room.name.toUpperCase().includes(filterText.toUpperCase()));
-
-        // TODO
-        /*if (users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
+        if (users.length > 0 && loggedInUserId && rooms.length > 0)
         {
             const user = users.find(user => user.id === loggedInUserId);
             if (user && user.favouriteRooms.length > 0)
-                return rooms.filter(room => func(user.favouriteRooms, room.id)).filter(room => filterText === '' || room.name.toUpperCase().includes(filterText));
-        }*/
+                return rooms.filter(room => func(user.favouriteRooms, room.id)).filter(room => filterToApply === '' || room.name.toUpperCase().includes(filterToApply));
+        }
 
         return rooms;
     };
+
+    const myFavouriteRooms = filterRooms((room, id) => { return room.includes(id); });
+    const myNonFavouriteRooms = filterRooms((room, id) => { return !room.includes(id); });
 
     return (
         <div>
@@ -99,21 +88,21 @@ const RoomListComponent = () =>
                 </Tooltip>
             </Stack>
             <Stack>
-                {rooms.length > 0 ? <Accordion disableGutters sx={{ backgroundColor:'#404040'}} expanded={favouriteExpansionToggle} TransitionProps={{ unmountOnExit: true }} >
+                {myFavouriteRooms.length > 0 ? <Accordion disableGutters sx={{ backgroundColor:'#404040'}} expanded={favouriteExpansionToggle} TransitionProps={{ unmountOnExit: true }} >
                     <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
                                       onClick={handleAccordionFavouritesClick}
                                       id='panel-1-header'
                                       aria-controls='panel1-content'
                                       expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><FavouritesFolderComponent/></AccordionSummary>
-                    <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                    <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myFavouriteRooms.map(room => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
                 </Accordion> : null}
-                {rooms.length > 0 ? <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={nonFavouriteExpansionToggle} TransitionProps={{ unmountOnExit: true }}>
+                {myNonFavouriteRooms.length > 0 ? <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={nonFavouriteExpansionToggle} TransitionProps={{ unmountOnExit: true }}>
                     <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
                                       id='panel-2-header'
                                       aria-controls='panel2-content'
                                       onClick={handleAccordionRecentClick}
                                       expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><NonFavouritesFolderComponent/></AccordionSummary>
-                    <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{rooms.filter(room => !room.isValid).map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                    <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myNonFavouriteRooms.map(room => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
                 </Accordion> : null}
             </Stack>
         </div>

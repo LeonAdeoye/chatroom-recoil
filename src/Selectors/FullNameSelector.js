@@ -1,5 +1,5 @@
 import {selectorFamily} from "recoil";
-import {usersState} from "../State/UsersState";
+import {usersState} from "../Atoms/UsersState";
 
 
 const fullNameSelector = selectorFamily({

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Grid, InputBase, Stack, Typography} from "@mui/material";
 import {useRecoilValue} from "recoil";
-import fullNameSelector from "../selectors/FullNameSelector"
-import shorterTimeStampSelector from "../selectors/ShorterTimeStampSelector";
+import fullNameSelector from "../Selectors/FullNameSelector"
+import shorterTimeStampSelector from "../Selectors/ShorterTimeStampSelector";
 
 const ChatMessageComponent = (props) =>
 {
