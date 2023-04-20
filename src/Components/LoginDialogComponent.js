@@ -68,7 +68,7 @@ const LoginDialogComponent = () =>
                     width='400px'
                     height='80px'
                     sx={{ backgroundColor: '#404040'}}
-                    open={loginDialogDisplayFlag}>
+                    open={Boolean(loginDialogDisplayFlag)}>
                 <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Login To Chat Rooms</DialogTitle>
                 <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}} onKeyPress={handleKeyPress}>
                     <TextField label='Enter your full name...'

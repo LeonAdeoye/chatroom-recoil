@@ -6,22 +6,20 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import membersCountSelector from "../Selectors/MembersCountSelector";
 import adminsCountSelector from "../Selectors/AdminsCountSelector";
+import {newAdminDialogDisplayState, newMemberDialogDisplayState} from "../Atoms/DialogsState";
 
 const RoomHeaderComponent = () =>
 {
     const [room] = useRecoilState(selectedRoomState);
     const membersCount = useRecoilValue(membersCountSelector);
     const adminsCount = useRecoilValue(adminsCountSelector);
+    // eslint-disable-next-line no-unused-vars
+    const [newAdminDialogDisplayFlag, setNewAdminDialogDisplayFlag] = useRecoilState(newAdminDialogDisplayState);
+    // eslint-disable-next-line no-unused-vars
+    const [newMemberDialogDisplayFlag, setNewMemberDialogDisplayFlag] = useRecoilState(newMemberDialogDisplayState);
 
-    const handleAddAdminClick = () =>
-    {
-        // TODO display dialog box.
-    }
-
-    const handleAddMemberClick = () =>
-    {
-        // TODO display dialog box.
-    }
+    const handleAddAdminClick = () => setNewAdminDialogDisplayFlag(true);
+    const handleAddMemberClick = () => setNewMemberDialogDisplayFlag(true);
 
     return (
         <div>

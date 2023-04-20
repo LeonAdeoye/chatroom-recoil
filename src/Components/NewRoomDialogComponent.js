@@ -14,15 +14,8 @@ const NewRoomDialogComponent = () =>
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
     const [roomName, setRoomName] = useState('');
 
-    const handleOnChangeEvent = (event) =>
-    {
-        setRoomName(event.target.value);
-    }
-
-    const handleCancel= () =>
-    {
-        setNewRoomDialogDisplayFlag(false);
-    }
+    const handleOnChangeEvent = (event) => setRoomName(event.target.value);
+    const handleCancel= () => setNewRoomDialogDisplayFlag(false);
 
     const handleSubmit = () =>
     {
@@ -59,7 +52,7 @@ const NewRoomDialogComponent = () =>
                     width='400px'
                     height='80px'
                     sx={{ backgroundColor: '#404040'}}
-                    open={newRoomDialogDisplayFlag}>
+                    open={Boolean(newRoomDialogDisplayFlag)}>
                 <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Add New Chat Room</DialogTitle>
                 <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}} onKeyPress={handleKeyPress}>
                     <TextField label='Enter the name of the chat room...'
