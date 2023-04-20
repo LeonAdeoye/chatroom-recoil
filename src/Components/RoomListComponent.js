@@ -9,6 +9,7 @@ import {useRecoilState} from "recoil";
 import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import NonFavouritesFolderComponent from "./NonFavouritesFolderComponent";
 import axios from "axios";
+import {newRoomDialogDisplayState} from "../Atoms/DialogsState";
 
 
 const RoomListComponent = () =>
@@ -16,6 +17,8 @@ const RoomListComponent = () =>
     const [rooms, setRooms] = useRecoilState(roomsState);
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
     const [users] = useRecoilState(usersState);
+    // eslint-disable-next-line no-unused-vars
+    const [newRoomDialogDisplayFlag, setNewRoomDialogDisplayFlag] = useRecoilState(newRoomDialogDisplayState);
 
     const [nonFavouriteExpansionToggle, setNonFavouriteExpansionToggle] = useState(false);
     const [favouriteExpansionToggle, setFavouriteExpansionToggle] = useState(false);
@@ -37,7 +40,7 @@ const RoomListComponent = () =>
 
     const handleClick = () =>
     {
-        // TODO - toggle open new chat room dialog.
+        setNewRoomDialogDisplayFlag(true);
     }
 
     const handleOnChange = (event) => setFilterText(event.target.value);
