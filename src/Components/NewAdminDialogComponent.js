@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
 import {Autocomplete } from '@mui/material'
 import {useRecoilState} from "recoil";
-import {newAdminDialogDisplayState} from "../Atoms/DialogsState";
-import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {errorDialogDisplayState, newAdminDialogDisplayState} from "../Atoms/DialogsState";
+import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
 
@@ -17,6 +17,10 @@ const NewAdminDialogComponent = () =>
     const [adminFullName, setAdminFullName] = useState('');
     const handleOnChangeEvent = (event, newValue) => setAdminFullName(newValue);
     const handleCancel= () => setNewAdminDialogDisplayFlag(false);
+    // eslint-disable-next-line no-unused-vars
+    const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleSubmit = () =>
     {
@@ -26,7 +30,10 @@ const NewAdminDialogComponent = () =>
         if(newRoomAdmin)
             addAdminToRoom(newRoomAdmin.id);
         else
-            console.log("New Admin user of a room must be an existing user.");
+        {
+            setErrorMessage("New admin user of a room must be an existing user.");
+            setErrorDialogDisplayFlag(true);
+        }
     }
 
     const addAdminToRoom = (newRoomAdminId) =>
@@ -39,7 +46,8 @@ const NewAdminDialogComponent = () =>
             })
             .catch(err =>
             {
-                console.log(err.message);
+                setErrorMessage(`Cannot add new admin: ${adminFullName} because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
             });
     }
 

@@ -19,3 +19,8 @@ export const newMemberDialogDisplayState = atom({
     key: 'newMemberDialogDisplayState',
     default: false,
 });
+
+export const errorDialogDisplayState = atom({
+    key: 'errorDialogDisplayState',
+    default: false,
+});

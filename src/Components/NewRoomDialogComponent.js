@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import {useRecoilState} from "recoil";
-import {newRoomDialogDisplayState} from "../Atoms/DialogsState";
-import {loggedInUserIdState} from "../Atoms/UsersState";
+import {errorDialogDisplayState, newRoomDialogDisplayState} from "../Atoms/DialogsState";
+import {errorMessageState, loggedInUserIdState} from "../Atoms/UsersState";
 import axios from "axios";
 import {roomsState} from "../Atoms/RoomsState";
 
@@ -13,6 +13,10 @@ const NewRoomDialogComponent = () =>
     const [rooms, setRooms] = useRecoilState(roomsState);
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
     const [roomName, setRoomName] = useState('');
+    // eslint-disable-next-line no-unused-vars
+    const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleOnChangeEvent = (event) => setRoomName(event.target.value);
     const handleCancel= () => setNewRoomDialogDisplayFlag(false);
@@ -42,7 +46,8 @@ const NewRoomDialogComponent = () =>
             })
             .catch(err =>
             {
-                console.log(err.message);
+                setErrorMessage(`Cannot add new room because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
             });
     }
 

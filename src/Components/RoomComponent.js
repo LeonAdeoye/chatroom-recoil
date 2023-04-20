@@ -5,12 +5,18 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {useRecoilState} from "recoil";
 import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
+import {errorMessageState} from "../Atoms/UsersState";
+import {errorDialogDisplayState} from "../Atoms/DialogsState";
 
 const RoomComponent = (props) =>
 {
     const [selectedRoomIndex, setSelectedRoomIndex] = useRecoilState(selectedRoomIndexState);
     // eslint-disable-next-line no-unused-vars
     const [room, setRoom] = useRecoilState(selectedRoomState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleFetchConversation = () =>
     {
@@ -18,11 +24,16 @@ const RoomComponent = (props) =>
         if(props.index !== -1)
         {
             axios.get('http://localhost:8080/room?roomId=' + props.index)
-                .then(response => {
+                .then(response =>
+                {
                     let room = response.data
                     setRoom(room);
                 })
-                .catch(err => console.log(err.message));
+                .catch(err =>
+                {
+                    setErrorMessage(`Cannot load selected room because of: ${err.message}`);
+                    setErrorDialogDisplayFlag(true);
+                });
         }
     }
 

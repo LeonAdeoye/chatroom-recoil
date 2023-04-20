@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
 import {Autocomplete } from '@mui/material'
 import {useRecoilState} from "recoil";
-import {newMemberDialogDisplayState} from "../Atoms/DialogsState";
-import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {errorDialogDisplayState, newMemberDialogDisplayState} from "../Atoms/DialogsState";
+import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
 
@@ -17,6 +17,10 @@ const NewMemberDialogComponent = () =>
     const [memberFullName, setMemberFullName] = useState('');
     const handleOnChangeEvent = (event, newValue) => setMemberFullName(newValue);
     const handleCancel= () => setNewMemberDialogDisplayFlag(false);
+    // eslint-disable-next-line no-unused-vars
+    const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleSubmit = () =>
     {
@@ -26,7 +30,10 @@ const NewMemberDialogComponent = () =>
         if(newRoomMember)
             addMemberToRoom(newRoomMember.id);
         else
-            console.log("New member user of a room must be an existing user.");
+        {
+            setErrorMessage("New member user of a room must be an existing user.");
+            setErrorDialogDisplayFlag(true);
+        }
     }
 
     const addMemberToRoom = (newRoomMemberId) =>
@@ -39,7 +46,8 @@ const NewMemberDialogComponent = () =>
             })
             .catch(err =>
             {
-                console.log(err.message);
+                setErrorMessage(`Cannot add new member: ${memberFullName} because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
             });
     }
 

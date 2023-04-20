@@ -6,10 +6,10 @@ import FavouritesFolderComponent from "./FavouritesFolderComponent";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {roomsState} from "../Atoms/RoomsState";
 import {useRecoilState} from "recoil";
-import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import NonFavouritesFolderComponent from "./NonFavouritesFolderComponent";
 import axios from "axios";
-import {newRoomDialogDisplayState} from "../Atoms/DialogsState";
+import {errorDialogDisplayState, newRoomDialogDisplayState} from "../Atoms/DialogsState";
 
 
 const RoomListComponent = () =>
@@ -17,12 +17,15 @@ const RoomListComponent = () =>
     const [rooms, setRooms] = useRecoilState(roomsState);
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
     const [users] = useRecoilState(usersState);
-    // eslint-disable-next-line no-unused-vars
-    const [newRoomDialogDisplayFlag, setNewRoomDialogDisplayFlag] = useRecoilState(newRoomDialogDisplayState);
-
     const [nonFavouriteExpansionToggle, setNonFavouriteExpansionToggle] = useState(false);
     const [favouriteExpansionToggle, setFavouriteExpansionToggle] = useState(false);
     const [filterText, setFilterText] = useState('');
+    // eslint-disable-next-line no-unused-vars
+    const [newRoomDialogDisplayFlag, setNewRoomDialogDisplayFlag] = useRecoilState(newRoomDialogDisplayState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     useEffect(() =>
     {
@@ -33,7 +36,8 @@ const RoomListComponent = () =>
             })
             .catch(err =>
             {
-                console.log(err.message);
+                setErrorMessage(`Cannot load all existing rooms because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
             });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import {useRecoilState} from "recoil";
-import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
-import {loginDialogDisplayState} from "../Atoms/DialogsState";
+import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {errorDialogDisplayState, loginDialogDisplayState} from "../Atoms/DialogsState";
 import axios from "axios";
 
 const LoginDialogComponent = () =>
@@ -12,13 +12,22 @@ const LoginDialogComponent = () =>
     const [loginDialogDisplayFlag, setLoginDialogDisplayFlag] = useRecoilState(loginDialogDisplayState);
     // eslint-disable-next-line no-unused-vars
     const [loggedInUserId, setLoggedInUserId] = useRecoilState(loggedInUserIdState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+    // eslint-disable-next-line no-unused-vars
+    const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     useEffect(() => {
         axios.get('http://localhost:8080/users')
-            .then(response => {
+            .then(response =>
+            {
                 setUsers(response.data);
             })
-            .catch(err => console.log(err.message));
+            .catch(err =>
+            {
+                setErrorMessage(`Cannot load all existing users because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
+            });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -36,8 +45,8 @@ const LoginDialogComponent = () =>
             })
             .catch(err =>
             {
-                // TODO handle all error logging also with popups.
-                console.log(err.message);
+                setErrorMessage(`Cannot add new user: ${fullName} because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
             });
     }
 
