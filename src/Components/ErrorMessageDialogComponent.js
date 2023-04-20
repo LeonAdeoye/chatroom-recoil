@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@mui/material";
 import {useRecoilState} from "recoil";
 import {errorDialogDisplayState} from "../Atoms/DialogsState";
-import {errorMessageState} from "../Atoms/UsersState";
+import {errorMessageState} from "../Atoms/ApplicationState";
 
 const ErrorMessageDialogComponent = () =>
 {

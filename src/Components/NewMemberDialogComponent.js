@@ -3,9 +3,10 @@ import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} fr
 import {Autocomplete } from '@mui/material'
 import {useRecoilState} from "recoil";
 import {errorDialogDisplayState, newMemberDialogDisplayState} from "../Atoms/DialogsState";
-import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
+import {errorMessageState} from "../Atoms/ApplicationState";
 
 const NewMemberDialogComponent = () =>
 {

@@ -4,12 +4,16 @@ import SendIcon from '@mui/icons-material/Send';
 import ArticleIcon from '@mui/icons-material/Article';
 import Paper from '@mui/material/Paper';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
+import {useRecoilState} from "recoil";
+import {chatEntryHeightState} from "../Atoms/ApplicationState";
 
 
 const ChatEntryComponent = () =>
 {
     const [newChatMessage, setNewChatMessage] = useState('');
     const [multiLineFlag, setMultiLineFlag] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [chatEntryHeight, setChatEntryHeight] = useRecoilState(chatEntryHeightState);
 
     const submitNewChatMessage = () =>
     {
@@ -34,7 +38,7 @@ const ChatEntryComponent = () =>
     {
         const value = !multiLineFlag;
         setMultiLineFlag(value);
-        // TODO changeHeight(value?100:50);
+        setChatEntryHeight(value?100:50);
     }
 
     return (

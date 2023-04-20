@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import {useRecoilState} from "recoil";
 import {errorDialogDisplayState, newRoomDialogDisplayState} from "../Atoms/DialogsState";
-import {errorMessageState, loggedInUserIdState} from "../Atoms/UsersState";
+import {loggedInUserIdState} from "../Atoms/UsersState";
 import axios from "axios";
 import {roomsState} from "../Atoms/RoomsState";
+import {errorMessageState} from "../Atoms/ApplicationState";
 
 const NewRoomDialogComponent = () =>
 {

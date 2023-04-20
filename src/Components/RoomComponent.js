@@ -5,8 +5,8 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {useRecoilState} from "recoil";
 import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
-import {errorMessageState} from "../Atoms/UsersState";
 import {errorDialogDisplayState} from "../Atoms/DialogsState";
+import {errorMessageState} from "../Atoms/ApplicationState";
 
 const RoomComponent = (props) =>
 {

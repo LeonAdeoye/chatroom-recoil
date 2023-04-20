@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import RoomListComponent from "./RoomListComponent";
 import ConversationComponent from "./ConversationComponent";
 import ChatEntryComponent from "./ChatEntryComponent";
 import {Grid, Box, Stack} from '@mui/material'
+import {useRecoilState} from "recoil";
+import {chatEntryHeightState} from "../Atoms/ApplicationState";
 
 const ChatRoomAppComponent = () =>
 {
-    const [chatEntryHeight, setChatEntryHeight] = useState(50);
-    const changeHeight = (value) => setChatEntryHeight(value);
+    const [chatEntryHeight] = useRecoilState(chatEntryHeightState);
 
     return (
         <>
@@ -24,7 +25,7 @@ const ChatRoomAppComponent = () =>
                             <ConversationComponent/>
                         </Box>
                         <Box sx={{height: chatEntryHeight === 100 ? '100px' : '50px'}}>
-                            <ChatEntryComponent changeHeight={changeHeight}/>
+                            <ChatEntryComponent/>
                         </Box>
                     </Stack>
                 </Grid>

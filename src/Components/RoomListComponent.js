@@ -6,10 +6,11 @@ import FavouritesFolderComponent from "./FavouritesFolderComponent";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {roomsState} from "../Atoms/RoomsState";
 import {useRecoilState} from "recoil";
-import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import NonFavouritesFolderComponent from "./NonFavouritesFolderComponent";
 import axios from "axios";
 import {errorDialogDisplayState, newRoomDialogDisplayState} from "../Atoms/DialogsState";
+import {errorMessageState} from "../Atoms/ApplicationState";
 
 
 const RoomListComponent = () =>

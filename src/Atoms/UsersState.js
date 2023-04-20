@@ -9,8 +9,3 @@ export const loggedInUserIdState = atom({
     key: 'loggedInUserIdState',
     default: '',
 });
-
-export const errorMessageState = atom({
-    key: 'errorMessageState',
-    default: '',
-});

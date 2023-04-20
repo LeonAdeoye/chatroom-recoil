@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
 import {useRecoilState} from "recoil";
-import {errorMessageState, loggedInUserIdState, usersState} from "../Atoms/UsersState";
+import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 import {errorDialogDisplayState, loginDialogDisplayState} from "../Atoms/DialogsState";
 import axios from "axios";
+import {errorMessageState} from "../Atoms/ApplicationState";
 
 const LoginDialogComponent = () =>
 {
