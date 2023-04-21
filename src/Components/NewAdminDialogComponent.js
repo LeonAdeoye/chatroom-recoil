@@ -42,8 +42,9 @@ const NewAdminDialogComponent = () =>
         axios.post(`http://localhost:8080/addAdmin?roomId=${selectedRoomIndex}&newAdminId=${newRoomAdminId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                let updatedAdministrators = response.data;
-                setSelectedRoom({...selectedRoom, updatedAdministrators});
+                let roomToUpdate = {...selectedRoom};
+                roomToUpdate.administrators = response.data;
+                setSelectedRoom(roomToUpdate);
             })
             .catch(err =>
             {

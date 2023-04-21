@@ -7,12 +7,15 @@ import {selectedRoomIndexState, selectedRoomState} from "../Atoms/RoomsState";
 import axios from "axios";
 import {errorDialogDisplayState} from "../Atoms/DialogsState";
 import {errorMessageState} from "../Atoms/ApplicationState";
+import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 
 const RoomComponent = (props) =>
 {
     const [selectedRoomIndex, setSelectedRoomIndex] = useRecoilState(selectedRoomIndexState);
+    const [users,setUsers] = useRecoilState(usersState);
+    const [loggedInUserId] = useRecoilState(loggedInUserIdState);
     // eslint-disable-next-line no-unused-vars
-    const [room, setRoom] = useRecoilState(selectedRoomState);
+    const [selectedRoom, setSelectedRoom] = useRecoilState(selectedRoomState);
     // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
     // eslint-disable-next-line no-unused-vars
@@ -26,8 +29,7 @@ const RoomComponent = (props) =>
             axios.get('http://localhost:8080/room?roomId=' + props.index)
                 .then(response =>
                 {
-                    let room = response.data
-                    setRoom(room);
+                    setSelectedRoom(response.data);
                 })
                 .catch(err =>
                 {
@@ -39,11 +41,26 @@ const RoomComponent = (props) =>
 
     const handleCloseRoom = () =>
     {
-        // TODO
+        // TODO close room.
     }
     const handleAddToFavourites = () =>
     {
-        // TODO
+        axios.put('http://localhost:8080/addToFavourites?userId=' + loggedInUserId + '&roomId=' + selectedRoomIndex)
+            .then(response =>
+            {
+                let loggedInUser = users.find(user => user.id === loggedInUserId);
+                let unchangedUsers = users.filter(user => user.id  !== loggedInUserId);
+                if(loggedInUser)
+                {
+                    let favouriteRooms = response.data;
+                    setUsers([...unchangedUsers, {...loggedInUser, favouriteRooms}]);
+                }
+            })
+            .catch(err =>
+            {
+                setErrorMessage(`Cannot add room to favourites because of: ${err.message}`);
+                setErrorDialogDisplayFlag(true);
+            });
     }
 
     return (

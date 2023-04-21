@@ -42,8 +42,9 @@ const NewMemberDialogComponent = () =>
         axios.post(`http://localhost:8080/addMember?roomId=${selectedRoomIndex}&newMemberId=${newRoomMemberId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                let updatedMembers = response.data;
-                setSelectedRoom({...selectedRoom, updatedMembers});
+                let roomToUpdate = {...selectedRoom};
+                roomToUpdate.members = response.data;
+                setSelectedRoom(roomToUpdate);
             })
             .catch(err =>
             {

@@ -37,7 +37,7 @@ const LoginDialogComponent = () =>
         setFullName(event.target.value);
     }
 
-    const addUser = (fullName) =>
+    const addUser = () =>
     {
         axios.post('http://localhost:8080/addUser?fullName='+fullName)
             .then(response =>
@@ -58,7 +58,7 @@ const LoginDialogComponent = () =>
         if(existingUser)
             setLoggedInUserId(existingUser.id);
         else
-            addUser(fullName);
+            addUser();
 
         setLoginDialogDisplayFlag(false);
     }

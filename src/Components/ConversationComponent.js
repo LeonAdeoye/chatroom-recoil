@@ -6,7 +6,6 @@ import ChatMessageComponent from "./ChatMessageComponent";
 import {useRecoilState} from "recoil";
 import {selectedRoomState} from "../Atoms/RoomsState";
 
-
 const ConversationComponent = () =>
 {
     const createDates = (inputList) =>

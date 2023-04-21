@@ -17,7 +17,6 @@ const RoomHeaderComponent = () =>
     const [newAdminDialogDisplayFlag, setNewAdminDialogDisplayFlag] = useRecoilState(newAdminDialogDisplayState);
     // eslint-disable-next-line no-unused-vars
     const [newMemberDialogDisplayFlag, setNewMemberDialogDisplayFlag] = useRecoilState(newMemberDialogDisplayState);
-
     const handleAddAdminClick = () => setNewAdminDialogDisplayFlag(true);
     const handleAddMemberClick = () => setNewMemberDialogDisplayFlag(true);
 
