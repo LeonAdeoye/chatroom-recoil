@@ -2,7 +2,7 @@ import {selectorFamily} from "recoil";
 
 const shorterTimeStampSelector = selectorFamily({
     key: "shorterTimeStampSelector",
-    get: (timeStamp) => ({get}) =>
+    get: (timeStamp) => () =>
     {
         return new Date(timeStamp).toLocaleTimeString();
     }

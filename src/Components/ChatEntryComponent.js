@@ -19,25 +19,22 @@ const ChatEntryComponent = () =>
     const [selectedRoomIndex] = useRecoilState(selectedRoomIndexState);
     const [room, setRoom] = useRecoilState(selectedRoomState);
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
-    // eslint-disable-next-line no-unused-vars
     const [chatEntryHeight, setChatEntryHeight] = useRecoilState(chatEntryHeightState);
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const submitNewChatMessage = () =>
     {
         createChatMessage();
         setNewChatMessage('');
-    }
+    };
 
     const createChatMessage = () =>
     {
         axios.post('http://localhost:8080/addChat', { roomId: selectedRoomIndex, content: newChatMessage, authorId: loggedInUserId })
             .then(response =>
             {
-                let conversation = response.data
+                let conversation = response.data;
                 setRoom({...room, conversation});
             })
             .catch(err =>
@@ -45,7 +42,7 @@ const ChatEntryComponent = () =>
                 setErrorMessage(`Cannot create new chat message because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
             });
-    }
+    };
 
     const handleOnChangeNewChatMessage = (event) => setNewChatMessage(event.target.value);
 
@@ -56,14 +53,14 @@ const ChatEntryComponent = () =>
             submitNewChatMessage();
 
         event.preventDefault();
-    }
+    };
 
     const switchToMultiline = () =>
     {
         const value = !multiLineFlag;
         setMultiLineFlag(value);
         setChatEntryHeight(value?100:50);
-    }
+    };
 
     return (
         <>

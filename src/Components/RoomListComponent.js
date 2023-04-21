@@ -3,7 +3,7 @@ import RoomComponent from "./RoomComponent";
 import {Accordion, AccordionDetails, AccordionSummary, IconButton, Stack, TextField, Tooltip, Typography} from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import FavouritesFolderComponent from "./FavouritesFolderComponent";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {roomsState} from "../Atoms/RoomsState";
 import {useRecoilState} from "recoil";
 import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
@@ -21,11 +21,8 @@ const RoomListComponent = () =>
     const [nonFavouriteExpansionToggle, setNonFavouriteExpansionToggle] = useState(false);
     const [favouriteExpansionToggle, setFavouriteExpansionToggle] = useState(false);
     const [filterText, setFilterText] = useState('');
-    // eslint-disable-next-line no-unused-vars
     const [newRoomDialogDisplayFlag, setNewRoomDialogDisplayFlag] = useRecoilState(newRoomDialogDisplayState);
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     useEffect(() =>
@@ -40,27 +37,26 @@ const RoomListComponent = () =>
                 setErrorMessage(`Cannot load all existing rooms because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
             });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleClick = () =>
     {
         setNewRoomDialogDisplayFlag(true);
-    }
+    };
 
     const handleOnChange = (event) => setFilterText(event.target.value);
 
     const handleAccordionFavouritesClick = () =>
     {
         let value = !favouriteExpansionToggle;
-        setFavouriteExpansionToggle(value)
-    }
+        setFavouriteExpansionToggle(value);
+    };
 
     const handleAccordionRecentClick = () =>
     {
         let value = !nonFavouriteExpansionToggle;
         setNonFavouriteExpansionToggle(value);
-    }
+    };
 
     const filterRooms = (func) =>
     {

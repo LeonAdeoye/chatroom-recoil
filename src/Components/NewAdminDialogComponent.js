@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
-import {Autocomplete } from '@mui/material'
+import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material';
+import {Autocomplete } from '@mui/material';
 import {useRecoilState} from "recoil";
 import {errorDialogDisplayState, newAdminDialogDisplayState} from "../Atoms/DialogsState";
 import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
@@ -18,9 +18,7 @@ const NewAdminDialogComponent = () =>
     const [adminFullName, setAdminFullName] = useState('');
     const handleOnChangeEvent = (event, newValue) => setAdminFullName(newValue);
     const handleCancel= () => setNewAdminDialogDisplayFlag(false);
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleSubmit = () =>
@@ -35,23 +33,23 @@ const NewAdminDialogComponent = () =>
             setErrorMessage("New admin user of a room must be an existing user.");
             setErrorDialogDisplayFlag(true);
         }
-    }
+    };
 
     const addAdminToRoom = (newRoomAdminId) =>
     {
         axios.post(`http://localhost:8080/addAdmin?roomId=${selectedRoomIndex}&newAdminId=${newRoomAdminId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                let roomToUpdate = {...selectedRoom};
-                roomToUpdate.administrators = response.data;
-                setSelectedRoom(roomToUpdate);
+                setSelectedRoom(response.data);
+                setAdminFullName("");
             })
             .catch(err =>
             {
                 setErrorMessage(`Cannot add new admin: ${adminFullName} because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
+                setAdminFullName("");
             });
-    }
+    };
 
     const handleKeyPress = (event) =>
     {
@@ -60,7 +58,7 @@ const NewAdminDialogComponent = () =>
             handleSubmit();
             event.preventDefault();
         }
-    }
+    };
 
     return (
         <div>

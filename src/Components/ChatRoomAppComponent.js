@@ -2,7 +2,7 @@ import React from 'react';
 import RoomListComponent from "./RoomListComponent";
 import ConversationComponent from "./ConversationComponent";
 import ChatEntryComponent from "./ChatEntryComponent";
-import {Grid, Box, Stack} from '@mui/material'
+import {Grid, Box, Stack} from '@mui/material';
 import {useRecoilState} from "recoil";
 import {chatEntryHeightState} from "../Atoms/ApplicationState";
 
@@ -32,6 +32,6 @@ const ChatRoomAppComponent = () =>
             </Grid>
         </>
     );
-}
+};
 
 export default ChatRoomAppComponent;

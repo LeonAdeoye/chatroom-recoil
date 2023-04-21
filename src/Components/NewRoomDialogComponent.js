@@ -10,13 +10,10 @@ import {errorMessageState} from "../Atoms/ApplicationState";
 const NewRoomDialogComponent = () =>
 {
     const [newRoomDialogDisplayFlag, setNewRoomDialogDisplayFlag] = useRecoilState(newRoomDialogDisplayState);
-    // eslint-disable-next-line no-unused-vars
     const [rooms, setRooms] = useRecoilState(roomsState);
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
     const [roomName, setRoomName] = useState('');
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleOnChangeEvent = (event) => setRoomName(event.target.value);
@@ -26,7 +23,7 @@ const NewRoomDialogComponent = () =>
     {
         setNewRoomDialogDisplayFlag(false);
         createNewRoom(roomName, loggedInUserId);
-    }
+    };
 
     const handleKeyPress = (event) =>
     {
@@ -35,14 +32,14 @@ const NewRoomDialogComponent = () =>
             handleSubmit();
             event.preventDefault();
         }
-    }
+    };
 
     const createNewRoom = (newRoomName, creatorId) =>
     {
         axios.post('http://localhost:8080/addRoom', { ownerId: creatorId, roomName: newRoomName})
             .then(response =>
             {
-                let room = response.data
+                let room = response.data;
                 setRooms([...rooms, {id: room.id, name: room.roomName}]);
             })
             .catch(err =>
@@ -50,7 +47,7 @@ const NewRoomDialogComponent = () =>
                 setErrorMessage(`Cannot add new room because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
             });
-    }
+    };
 
     return (
         <div>

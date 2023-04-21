@@ -6,7 +6,7 @@ const activitySelector = selectorFamily({
     key: "activitySelector",
     get: (activityDetails) => ({get}) =>
     {
-        const {instigatorId, thirdPartyId, activity} = activityDetails
+        const {instigatorId, thirdPartyId, activity} = activityDetails;
         const instigatorName = get(fullNameSelector(instigatorId));
         const targetName = get(fullNameSelector(thirdPartyId));
 

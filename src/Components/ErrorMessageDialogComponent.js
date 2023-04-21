@@ -13,7 +13,7 @@ const ErrorMessageDialogComponent = () =>
     {
         setErrorDialogDisplayFlag(false);
         setErrorMessage('');
-    }
+    };
 
     const handleKeyPress = (event) =>
     {
@@ -22,7 +22,7 @@ const ErrorMessageDialogComponent = () =>
             handleSubmit();
             event.preventDefault();
         }
-    }
+    };
 
     return (
         <div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Grid, IconButton, Tooltip, Typography} from '@mui/material'
+import {Box, Grid, IconButton, Tooltip, Typography} from '@mui/material';
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {useRecoilState} from "recoil";
@@ -9,24 +9,21 @@ import {errorDialogDisplayState} from "../Atoms/DialogsState";
 import {errorMessageState} from "../Atoms/ApplicationState";
 import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
 
-const RoomComponent = (props) =>
+const RoomComponent = ({index, roomName}) =>
 {
     const [selectedRoomIndex, setSelectedRoomIndex] = useRecoilState(selectedRoomIndexState);
     const [users,setUsers] = useRecoilState(usersState);
     const [loggedInUserId] = useRecoilState(loggedInUserIdState);
-    // eslint-disable-next-line no-unused-vars
     const [selectedRoom, setSelectedRoom] = useRecoilState(selectedRoomState);
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleFetchConversation = () =>
     {
-        setSelectedRoomIndex(props.index);
-        if(props.index !== -1)
+        setSelectedRoomIndex(index);
+        if(index !== -1)
         {
-            axios.get('http://localhost:8080/room?roomId=' + props.index)
+            axios.get('http://localhost:8080/room?roomId=' + index)
                 .then(response =>
                 {
                     setSelectedRoom(response.data);
@@ -37,12 +34,13 @@ const RoomComponent = (props) =>
                     setErrorDialogDisplayFlag(true);
                 });
         }
-    }
+    };
 
     const handleCloseRoom = () =>
     {
         // TODO close room.
-    }
+    };
+
     const handleAddToFavourites = () =>
     {
         axios.put('http://localhost:8080/addToFavourites?userId=' + loggedInUserId + '&roomId=' + selectedRoomIndex)
@@ -61,7 +59,7 @@ const RoomComponent = (props) =>
                 setErrorMessage(`Cannot add room to favourites because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
             });
-    }
+    };
 
     return (
         <Box sx={{
@@ -76,22 +74,22 @@ const RoomComponent = (props) =>
                 borderColor:'white',
                 border:1
             }}}
-             bgcolor={selectedRoomIndex === props.index ? '#363535' : '#404040'}
+             bgcolor={selectedRoomIndex === index ? '#363535' : '#404040'}
              onClick={handleFetchConversation}>
             <Grid container rowSpacing={0} columnSpacing={0}>
                 <Grid item  xl>
-                    <Typography>{props.roomName}</Typography>
+                    <Typography align="left">{roomName}</Typography>
                 </Grid>
                 <Grid item xl={2}>
-                    {(selectedRoomIndex === props.index) &&
-                        <Box display="flex" alignItems="center">
+                    {(selectedRoomIndex === index) &&
+                        <Box display="flex">
                             <Tooltip title={<Typography fontSize={20}>Add chat room to favourites.</Typography>}>
-                                <IconButton sx={{ color:'white'}} size='small' onClick={handleAddToFavourites}>
+                                <IconButton sx={{ color:'white', ml:-1}} size='small' onClick={handleAddToFavourites}>
                                     <StarBorderPurple500RoundedIcon/>
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title={<Typography fontSize={20}>Hide chat room.</Typography>}>
-                                <IconButton sx={{ color:'white'}} size='small' onClick={handleCloseRoom}>
+                                <IconButton sx={{ color:'white', ml:-1}} size='small' onClick={handleCloseRoom}>
                                     <CloseRoundedIcon/>
                                 </IconButton>
                             </Tooltip>

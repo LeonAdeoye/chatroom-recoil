@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
-import {Autocomplete } from '@mui/material'
+import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material';
+import {Autocomplete } from '@mui/material';
 import {useRecoilState} from "recoil";
 import {errorDialogDisplayState, newMemberDialogDisplayState} from "../Atoms/DialogsState";
 import {loggedInUserIdState, usersState} from "../Atoms/UsersState";
@@ -18,9 +18,7 @@ const NewMemberDialogComponent = () =>
     const [memberFullName, setMemberFullName] = useState('');
     const handleOnChangeEvent = (event, newValue) => setMemberFullName(newValue);
     const handleCancel= () => setNewMemberDialogDisplayFlag(false);
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     const handleSubmit = () =>
@@ -35,23 +33,23 @@ const NewMemberDialogComponent = () =>
             setErrorMessage("New member user of a room must be an existing user.");
             setErrorDialogDisplayFlag(true);
         }
-    }
+    };
 
     const addMemberToRoom = (newRoomMemberId) =>
     {
         axios.post(`http://localhost:8080/addMember?roomId=${selectedRoomIndex}&newMemberId=${newRoomMemberId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                let roomToUpdate = {...selectedRoom};
-                roomToUpdate.members = response.data;
-                setSelectedRoom(roomToUpdate);
+                setSelectedRoom(response.data);
+                setMemberFullName("");
             })
             .catch(err =>
             {
                 setErrorMessage(`Cannot add new member: ${memberFullName} because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
+                setMemberFullName("");
             });
-    }
+    };
 
     const handleKeyPress = (event) =>
     {
@@ -60,7 +58,7 @@ const NewMemberDialogComponent = () =>
             handleSubmit();
             event.preventDefault();
         }
-    }
+    };
 
     return (
         <div>

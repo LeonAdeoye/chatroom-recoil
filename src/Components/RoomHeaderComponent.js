@@ -13,9 +13,7 @@ const RoomHeaderComponent = () =>
     const [room] = useRecoilState(selectedRoomState);
     const membersCount = useRecoilValue(membersCountSelector);
     const adminsCount = useRecoilValue(adminsCountSelector);
-    // eslint-disable-next-line no-unused-vars
     const [newAdminDialogDisplayFlag, setNewAdminDialogDisplayFlag] = useRecoilState(newAdminDialogDisplayState);
-    // eslint-disable-next-line no-unused-vars
     const [newMemberDialogDisplayFlag, setNewMemberDialogDisplayFlag] = useRecoilState(newMemberDialogDisplayState);
     const handleAddAdminClick = () => setNewAdminDialogDisplayFlag(true);
     const handleAddMemberClick = () => setNewMemberDialogDisplayFlag(true);
@@ -23,7 +21,7 @@ const RoomHeaderComponent = () =>
     return (
         <div>
             <Stack width={'100%'} sx={{ border:1, borderColor:'white', backgroundColor:'#363535'}}>
-                <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{room.roomName}</Typography></Box>
+                <Box ><Typography align="center" variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{room.roomName}</Typography></Box>
                 <Grid container>
                     <Grid item xs={0.5}>
                         <Box>

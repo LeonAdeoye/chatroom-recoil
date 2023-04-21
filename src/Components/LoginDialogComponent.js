@@ -11,11 +11,8 @@ const LoginDialogComponent = () =>
     const [fullName, setFullName] = useState('');
     const [users,setUsers] = useRecoilState(usersState);
     const [loginDialogDisplayFlag, setLoginDialogDisplayFlag] = useRecoilState(loginDialogDisplayState);
-    // eslint-disable-next-line no-unused-vars
     const [loggedInUserId, setLoggedInUserId] = useRecoilState(loggedInUserIdState);
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-    // eslint-disable-next-line no-unused-vars
     const [errorDialogDisplayFlag, setErrorDialogDisplayFlag] = useRecoilState(errorDialogDisplayState);
 
     useEffect(() => {
@@ -29,13 +26,12 @@ const LoginDialogComponent = () =>
                 setErrorMessage(`Cannot load all existing users because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
             });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleOnChangeEvent = (event) =>
     {
         setFullName(event.target.value);
-    }
+    };
 
     const addUser = () =>
     {
@@ -49,7 +45,7 @@ const LoginDialogComponent = () =>
                 setErrorMessage(`Cannot add new user: ${fullName} because of: ${err.message}`);
                 setErrorDialogDisplayFlag(true);
             });
-    }
+    };
 
     const handleSubmit = () =>
     {
@@ -61,7 +57,7 @@ const LoginDialogComponent = () =>
             addUser();
 
         setLoginDialogDisplayFlag(false);
-    }
+    };
 
     const handleKeyPress = (event) =>
     {
@@ -70,7 +66,7 @@ const LoginDialogComponent = () =>
             handleSubmit();
             event.preventDefault();
         }
-    }
+    };
 
     return (
         <div>

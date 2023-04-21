@@ -1,15 +1,14 @@
 import React from 'react';
 import {Grid, InputBase, Stack, Typography} from "@mui/material";
 import {useRecoilValue} from "recoil";
-import fullNameSelector from "../Selectors/FullNameSelector"
+import fullNameSelector from "../Selectors/FullNameSelector";
 import shorterTimeStampSelector from "../Selectors/ShorterTimeStampSelector";
 
-const ChatMessageComponent = (props) =>
+const ChatMessageComponent = ({authorId, timeStamp, message}) =>
 {
-    const {chatMessage} = props;
-    const fullName = useRecoilValue(fullNameSelector(chatMessage.authorId));
-    const shorterTimeStamp = useRecoilValue(shorterTimeStampSelector(chatMessage.timeStamp));
-    const handleSelectChatMessage = () => {};
+    const fullName = useRecoilValue(fullNameSelector(authorId));
+    const shorterTimeStamp = useRecoilValue(shorterTimeStampSelector(timeStamp));
+    const handleSelectChatMessage = () => {}; // TODO
 
     return (
         <div>
@@ -23,7 +22,7 @@ const ChatMessageComponent = (props) =>
                     </Grid>
                     <Grid item xs={10.25}>
                         <InputBase sx={{ padding: 0, backgroundColor: '#404040', color:'lightgray', fontFamily: 'cursive'}}
-                                   multiline={true} value={chatMessage.content} fullWidth/>
+                                   multiline={true} value={message} fullWidth/>
                     </Grid>
                 </Grid>
             </Stack>
@@ -31,4 +30,4 @@ const ChatMessageComponent = (props) =>
     );
 };
 
-export default ChatMessageComponent;
+export default React.memo(ChatMessageComponent);
