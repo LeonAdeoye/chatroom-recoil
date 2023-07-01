@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import RoomListComponent from "./RoomListComponent";
 import ConversationComponent from "./ConversationComponent";
 import ChatEntryComponent from "./ChatEntryComponent";
@@ -9,6 +9,12 @@ import {chatEntryHeightState} from "../Atoms/ApplicationState";
 const ChatRoomAppComponent = () =>
 {
     const [chatEntryHeight] = useRecoilState(chatEntryHeightState);
+
+    useEffect(() =>
+    {
+        let ws = new WebSocket('ws://localhost:8080/stomp');
+        ws.onmessage = (data) => alert(data.data);
+    }, []);
 
     return (
         <>
