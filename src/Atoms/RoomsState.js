@@ -19,3 +19,8 @@ export const selectedChatMessageIndexState = atom({
     key: 'selectedChatMessageIndexState',
     default: -1,
 });
+
+export const realtimeMessageState = atom({
+    key: 'realtimeMessageState',
+    default: {},
+});

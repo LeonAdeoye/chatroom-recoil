@@ -5,15 +5,21 @@ import ChatEntryComponent from "./ChatEntryComponent";
 import {Grid, Box, Stack} from '@mui/material';
 import {useRecoilState} from "recoil";
 import {chatEntryHeightState} from "../Atoms/ApplicationState";
+import {loggedInUserIdState} from "../Atoms/UsersState";
+import {realtimeMessageState} from "../Atoms/RoomsState";
 
 const ChatRoomAppComponent = () =>
 {
     const [chatEntryHeight] = useRecoilState(chatEntryHeightState);
+    const [, setRealtimeMessage] = useRecoilState(realtimeMessageState);
 
     useEffect(() =>
     {
         let ws = new WebSocket('ws://localhost:8080/stomp');
-        ws.onmessage = (data) => alert(data.data);
+        ws.onmessage = (message) =>
+        {
+            setRealtimeMessage(message.data);
+        };
     }, []);
 
     return (
