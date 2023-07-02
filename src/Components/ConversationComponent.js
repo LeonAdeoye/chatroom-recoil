@@ -4,7 +4,7 @@ import RoomHeaderComponent from "./RoomHeaderComponent";
 import ActivityComponent from "./ActivityComponent";
 import ChatMessageComponent from "./ChatMessageComponent";
 import {useRecoilState} from "recoil";
-import {selectedRoomState} from "../Atoms/RoomsState";
+import {realtimeMessageState, selectedRoomState} from "../Atoms/RoomsState";
 
 const ConversationComponent = () =>
 {
@@ -51,6 +51,8 @@ const ConversationComponent = () =>
 
     let result = [];
     const [room] = useRecoilState(selectedRoomState);
+    const [realtimeMessage] = useRecoilState(realtimeMessageState);
+
     if(room !== null)
     {
         let intermediateResult = room.conversation.concat(room.activities);

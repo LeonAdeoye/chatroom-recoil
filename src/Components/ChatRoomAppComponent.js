@@ -16,10 +16,7 @@ const ChatRoomAppComponent = () =>
     useEffect(() =>
     {
         let ws = new WebSocket('ws://localhost:8080/stomp');
-        ws.onmessage = (message) =>
-        {
-            setRealtimeMessage(message.data);
-        };
+        ws.onmessage = (message) => setRealtimeMessage(message.data);
     }, []);
 
     return (
