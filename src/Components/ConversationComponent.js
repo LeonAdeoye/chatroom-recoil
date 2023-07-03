@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Typography} from "@mui/material";
 import RoomHeaderComponent from "./RoomHeaderComponent";
 import ActivityComponent from "./ActivityComponent";
@@ -28,7 +28,7 @@ const ConversationComponent = () =>
             let year = currentDate.getFullYear();
             let day = currentDate.getDate();
             let contentDate = `${weekday} ${day} ${month} ${year}`;
-            let timeStampDate = `${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${day}T00:00:00.000`;
+            let timeStampDate = `${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${zeroPadDigits(day, 2)}T00:00:00.000`;
             result.push({content: contentDate, id: contentDate, contentType: 'date-divider', timeStamp: timeStampDate});
         }
 
