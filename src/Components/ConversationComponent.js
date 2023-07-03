@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Box, Typography} from "@mui/material";
 import RoomHeaderComponent from "./RoomHeaderComponent";
 import ActivityComponent from "./ActivityComponent";
@@ -8,28 +8,40 @@ import {realtimeMessageState, selectedRoomState} from "../Atoms/RoomsState";
 
 const ConversationComponent = () =>
 {
+    const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const zeroPadDigits = (number, digits) =>
+    {
+        return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+    };
+
+    const createTimeStamp = (timeStamp) =>
+    {
+        let currentDate = new Date(timeStamp);
+        let year = currentDate.getFullYear();
+        let day = currentDate.getDate();
+        return `${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${zeroPadDigits(day, 2)}T00:00:00.000`;
+    }
+
+    const createContentDate = (timeStamp) =>
+    {
+        let currentDate = new Date(timeStamp);
+        let month = months[currentDate.getMonth()];
+        let weekday = weekdays[currentDate.getDay()];
+        let year = currentDate.getFullYear();
+        let day = currentDate.getDate();
+        return `${weekday} ${day} ${month} ${year}`;
+    }
+
     const createDates = (inputList) =>
     {
-        // Add zero padding - used for month.
-        const zeroPadDigits = (number, digits) =>
-        {
-            return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
-        };
-
-        const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let result = [];
 
         for(let index = 0; index < inputList.length; ++index)
         {
-            let currentDate = new Date(inputList[index]["timeStamp"]);
-            let month = months[currentDate.getMonth()];
-            let weekday = weekdays[currentDate.getDay()];
-            let year = currentDate.getFullYear();
-            let day = currentDate.getDate();
-            let contentDate = `${weekday} ${day} ${month} ${year}`;
-            let timeStampDate = `${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${zeroPadDigits(day, 2)}T00:00:00.000`;
-            result.push({content: contentDate, id: contentDate, contentType: 'date-divider', timeStamp: timeStampDate});
+            let timeStamp = inputList[index]["timeStamp"];
+            result.push({content: createContentDate(timeStamp), id: createContentDate(timeStamp), contentType: 'date-divider', timeStamp: createTimeStamp(timeStamp)});
         }
 
         // Remove duplicates
@@ -55,7 +67,17 @@ const ConversationComponent = () =>
 
     if(room !== null)
     {
+        // TODO remove duplicates when same chat entry added manually and also broadcast by websocket.
         let intermediateResult = room.conversation.concat(room.activities);
+        if(JSON.stringify(realtimeMessage) !== "{}")
+        {
+            let realtimeMessageObject = JSON.parse(realtimeMessage.toString());
+            if(realtimeMessageObject.roomId === room.id)
+            {
+                realtimeMessageObject.timeStamp = new Date(realtimeMessageObject.timeStamp).toISOString();
+                intermediateResult.push(realtimeMessageObject);
+            }
+        }
         let uniqueDates = createDates(intermediateResult);
         result = intermediateResult.concat(uniqueDates).sort((a, b) => new Date(a["timeStamp"]).getTime() - new Date(b["timeStamp"]).getTime());
     }
