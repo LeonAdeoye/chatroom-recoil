@@ -5,6 +5,7 @@ import ActivityComponent from "./ActivityComponent";
 import ChatMessageComponent from "./ChatMessageComponent";
 import {useRecoilState} from "recoil";
 import {realtimeMessageState, selectedRoomState} from "../Atoms/RoomsState";
+import {loggedInUserIdState} from "../Atoms/UsersState";
 
 const ConversationComponent = () =>
 {
@@ -22,9 +23,9 @@ const ConversationComponent = () =>
         let year = currentDate.getFullYear();
         let day = currentDate.getDate();
         return `${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${zeroPadDigits(day, 2)}T00:00:00.000`;
-    }
+    };
 
-    const createContentDate = (timeStamp) =>
+    const createDateDividerContent = (timeStamp) =>
     {
         let currentDate = new Date(timeStamp);
         let month = months[currentDate.getMonth()];
@@ -32,23 +33,18 @@ const ConversationComponent = () =>
         let year = currentDate.getFullYear();
         let day = currentDate.getDate();
         return `${weekday} ${day} ${month} ${year}`;
-    }
+    };
 
-    const createDates = (inputList) =>
+    const createDateDividers = (inputList) =>
     {
-        let result = [];
-
+        let contentArray = [];
+        // For each chat message's timestamp create a date divider
         for(let index = 0; index < inputList.length; ++index)
         {
             let timeStamp = inputList[index]["timeStamp"];
-            result.push({content: createContentDate(timeStamp), id: createContentDate(timeStamp), contentType: 'date-divider', timeStamp: createTimeStamp(timeStamp)});
+            contentArray.push({content: createDateDividerContent(timeStamp), id: createDateDividerContent(timeStamp), contentType: 'date-divider', timeStamp: createTimeStamp(timeStamp)});
         }
-
-        // Remove duplicates
-        return Array.from(new Set(result.map(a => a.id)))
-            .map(id => {
-                return result.find(a => a.id === id);
-            });
+        return contentArray;
     };
 
     const renderDifferentMessageTypes = (content) =>
@@ -64,22 +60,33 @@ const ConversationComponent = () =>
     let result = [];
     const [room] = useRecoilState(selectedRoomState);
     const [realtimeMessage] = useRecoilState(realtimeMessageState);
+    const [loggedInUserId] = useRecoilState(loggedInUserIdState);
 
     if(room !== null)
     {
-        // TODO remove duplicates when same chat entry added manually and also broadcast by websocket.
+        // Merge conversation and activities into one array.
         let intermediateResult = room.conversation.concat(room.activities);
+        // Add any realtime message received via the WebSocket topic broadcast to the conversation.
         if(JSON.stringify(realtimeMessage) !== "{}")
         {
             let realtimeMessageObject = JSON.parse(realtimeMessage.toString());
-            if(realtimeMessageObject.roomId === room.id)
+            // Only add the message if it is from the current room and not from the logged-in user.
+            if(realtimeMessageObject.roomId === room.id && realtimeMessageObject.authorId !== loggedInUserId)
             {
+                // Convert the timestamp to ISO format.
                 realtimeMessageObject.timeStamp = new Date(realtimeMessageObject.timeStamp).toISOString();
                 intermediateResult.push(realtimeMessageObject);
             }
         }
-        let uniqueDates = createDates(intermediateResult);
+        // Using the timestamp create the date dividers
+        let uniqueDates = createDateDividers(intermediateResult);
+        // Sort all conversation elements by timestamp.
         result = intermediateResult.concat(uniqueDates).sort((a, b) => new Date(a["timeStamp"]).getTime() - new Date(b["timeStamp"]).getTime());
+        // Remove duplicates conversation content using the ID.
+        result = Array.from(new Set(result.map(a => a.id)))
+            .map(id => {
+                return result.find(a => a.id === id);
+            });
     }
 
     return (
