@@ -9,30 +9,25 @@ import {loggedInUserIdState} from "../Atoms/UsersState";
 
 const ConversationComponent = () =>
 {
-    const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const [room] = useRecoilState(selectedRoomState);
+    const [realtimeMessage] = useRecoilState(realtimeMessageState);
+    const [loggedInUserId] = useRecoilState(loggedInUserIdState);
 
     const zeroPadDigits = (number, digits) =>
     {
         return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
     };
 
-    const createTimeStamp = (timeStamp) =>
+    const transformTimestamp = (timestamp) =>
     {
-        let currentDate = new Date(timeStamp);
-        let year = currentDate.getFullYear();
-        let day = currentDate.getDate();
-        return `${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${zeroPadDigits(day, 2)}T00:00:00.000`;
-    };
-
-    const createDateDividerContent = (timeStamp) =>
-    {
-        let currentDate = new Date(timeStamp);
+        let weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let currentDate = new Date(timestamp);
         let month = months[currentDate.getMonth()];
         let weekday = weekdays[currentDate.getDay()];
         let year = currentDate.getFullYear();
         let day = currentDate.getDate();
-        return `${weekday} ${day} ${month} ${year}`;
+        return [`${year}-${zeroPadDigits(currentDate.getMonth() + 1, 2)}-${zeroPadDigits(day, 2)}T00:00:00.000`, `${weekday} ${day} ${month} ${year}`];
     };
 
     const createDateDividers = (inputList) =>
@@ -41,8 +36,8 @@ const ConversationComponent = () =>
         // For each chat message's timestamp create a date divider
         for(let index = 0; index < inputList.length; ++index)
         {
-            let timeStamp = inputList[index]["timeStamp"];
-            contentArray.push({content: createDateDividerContent(timeStamp), id: createDateDividerContent(timeStamp), contentType: 'date-divider', timeStamp: createTimeStamp(timeStamp)});
+            const [transformedTimestamp, dateDividerContent] = transformTimestamp(inputList[index]["timeStamp"]);
+            contentArray.push({content: dateDividerContent, id: dateDividerContent, contentType: 'date-divider', timeStamp: transformedTimestamp});
         }
         return contentArray;
     };
@@ -58,10 +53,6 @@ const ConversationComponent = () =>
     };
 
     let result = [];
-    const [room] = useRecoilState(selectedRoomState);
-    const [realtimeMessage] = useRecoilState(realtimeMessageState);
-    const [loggedInUserId] = useRecoilState(loggedInUserIdState);
-
     if(room !== null)
     {
         // Merge conversation and activities into one array.
